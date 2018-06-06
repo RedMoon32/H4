@@ -31,7 +31,7 @@ START_TEST(test_vector_qsort)
         for (int i = 0; i < size; ++i) {
             ((int*)v->data)[i]=size-i;
         }
-        qsort(v->data,size, sizeof(int), comp_vectors_int);
+        qsort(v->data,size, v->itemsize, comp_vectors_int);
         for (int i = 0; i < size; ++i) {
             printf("%d ",((int*)v->data)[i]);
             if (i>0){
