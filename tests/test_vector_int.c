@@ -6,6 +6,7 @@
 #include <check.h>
 #include "vector_int.h"
 #include <stdlib.h>
+#include "vector.c"
 
 START_TEST(test_vector_create)
         {

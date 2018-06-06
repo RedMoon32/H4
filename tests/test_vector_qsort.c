@@ -5,28 +5,40 @@
 #include <check.h>
 #include "vector_int.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <../src/vector.c>
 
 #define NELEMS(x) (sizeof (x)/sizeof (x[0]))
 
-int comp_vectors_int(const void *a, const void *b)
-/* Returns -ve if a<b, 0 if a==b, +ve if a>b */
+
+int comp_vectors_int(const void *first, const void *second)
 {
-    struct Vector *v1 = (struct Vector *)a;
-    struct Vector *v2 = (struct Vector *)b;
-    /** YOUR CODE HERE */
+    int a=*((int*)first);
+    int b=*((int*)second);
+    if (a==b){
+        return 0;
+    }
+    if (a<b){
+        return -1;
+    }
+    return 1;
 }
 
 START_TEST(test_vector_qsort)
-        {
-                struct Vector *v;
-                for (int i = 0; i < NELEMS(v); ++i) {
-                    /** Initialisation */
-                }
-                qsort(&v, NELEMS(v), sizeof v[0], comp_vectors_int);
-                for (int i = 0; i < NELEMS(v); ++i) {
-                    /** printf */
-                }
+    {
+        int size=10;
+        Vector* v = vector_create_int(size);
+        for (int i = 0; i < size; ++i) {
+            ((int*)v->data)[i]=size-i;
         }
+        qsort(v->data,size, sizeof(int), comp_vectors_int);
+        for (int i = 0; i < size; ++i) {
+            printf("%d ",((int*)v->data)[i]);
+            if (i>0){
+                ck_assert(((int*)v->data)[i]>=((int*)v->data)[i-1]);
+            }
+        }
+    }
 END_TEST
 
 
